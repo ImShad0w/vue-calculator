@@ -1,7 +1,6 @@
-<script setup></script>
-
+<script setup>
+import calculator from "./components/Calculator.vue";
+</script>
 <template>
-  <h1>Calculator</h1>
+  <calculator />
 </template>
-
-<style src="styles.css"></style>
