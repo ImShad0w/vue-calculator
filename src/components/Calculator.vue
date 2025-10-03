@@ -21,15 +21,15 @@ const buttons = [
   "7",
   "8",
   "9",
-  "÷",
+  "/",
   "4",
   "5",
   "6",
-  "×",
+  "*",
   "1",
   "2",
   "3",
-  "−",
+  "-",
   "0",
   ".",
   "=",
@@ -37,9 +37,7 @@ const buttons = [
   "C",
 ];
 
-const display = computed(() => {
-  return current.value; // Always have the current value
-});
+const display = computed(() => Number(current.value));
 
 function press(btn) {
   if (!isNaN(btn) || btn === ".") {
@@ -53,22 +51,49 @@ function press(btn) {
   }
 }
 
-function appendOperator(btn) {
-  operator.value = btn;
+function appendNum(num) {
+  if (num === "." && current.value.includes(".")) return;
+  if (current.value === "0" && num !== ".") {
+    current.value = num; // replace leading 0
+  } else {
+    current.value += num;
+  }
 }
-
-//function appendNum(num) {
-//    return;
-//  } else if (num === "." && current.value.contains(".")) {
-//    return;
-//  }
-//  current.value += num;
-//}
 
 function clearAll() {
   current.value = 0;
-  firstValue.value = null;
+  storedValue.value = null;
   operator.value = null;
+}
+
+function appendOperator(op) {
+  operator.value = op;
+  storedValue.value = current.value;
+  current.value = 0;
+}
+
+function calculate() {
+  if (storedValue.value !== null && operator.value !== null) {
+    const a = Number(storedValue.value);
+    const b = Number(current.value);
+
+    switch (operator.value) {
+      case "+":
+        current.value = String(a + b);
+        break;
+      case "-":
+        current.value = String(a - b);
+        break;
+      case "/":
+        current.value = String(a / b);
+        break;
+      case "*":
+        current.value = String(a * b);
+        break;
+    }
+    storedValue.value = null;
+    operator.value = null;
+  }
 }
 </script>
 <style>
