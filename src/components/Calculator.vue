@@ -1,15 +1,12 @@
 <template>
   <div class="calculator">
     <Display :display="Number(display)" />
-    <div class="grid">
-      <button v-for="btn in buttons" :label="btn" @click="press(btn)">
-        {{ btn }}
-      </button>
-    </div>
+    <ButtonGrid :buttons="buttons" @clickedButton="press" />
   </div>
 </template>
 <script setup>
 import Display from "./Display.vue";
+import ButtonGrid from "./ButtonGrid.vue";
 import { ref, computed } from "vue";
 
 //We assign the 3 main things we need
@@ -113,5 +110,7 @@ function calculate() {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
+  background-color: gray;
+  padding: 5px 10px;
 }
 </style>
